@@ -2,85 +2,86 @@
 // const data2 = data.features;
 // console.log(data2);
 
-// const date = new Date();
-// const day = date.getDay();
-//顯示資料用
-// function renderDay(){
-//     // 判斷日期
-//     let date = new Date();//建立Date物件 137
-//     let day = date.getDay();//回傳禮拜幾
-//     let chineseDay = judgeDayChinese(day);
-//     // 顯示今天日期到網頁
-//     let today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-//     // console.log(today);
-//     document.querySelector('.jsDate span').textContent = chineseDay;
-//     document.querySelector('h3').textContent = today;
-//     //判斷身分證奇偶數，顯示可以購買號碼
-//     if(day == 1 ||  day ==3 || day ==5){
-//         document.querySelector('.odd').style.display ='block';
-//     }else if(day ==2 || day ==4 || day ==6){ 
-//         document.querySelector('.even').style.display ='block';
-//     }else{
-//         document.querySelector('.all').style.display ='block';
-//     }
+const date = new Date();
+const day = date.getDay();
+// 顯示資料用
+function renderDay(){
+    // 判斷日期
+    let date = new Date();//建立Date物件 137
+    let day = date.getDay();//回傳禮拜幾
+    let chineseDay = judgeDayChinese(day);
+    // 顯示今天日期到網頁
+    let today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+    // console.log(today);
+    document.querySelector('.jsDate span').textContent = chineseDay;
+    document.querySelector('.today').textContent = today;
+    //判斷身分證奇偶數，顯示可以購買號碼
+    if(day == 1 ||  day ==3 || day ==5){
+        document.querySelector('.odd').style.display ='block';
+    }else if(day ==2 || day ==4 || day ==6){ 
+        document.querySelector('.even').style.display ='block';
+    }else{
+        document.querySelector('.all').style.display ='block';
+    }
     
-// };
+};
 
 
 
 
-// //工具類 函式 輸入東西>輸出內容
-// function judgeDayChinese(day){
-//     if(day =="1"){
-//         return "一";
-//     }else if(day =="2"){
-//         return "二";
-//     }else if(day =="3"){
-//         return "三";
-//     }else if(day =="4"){
-//         return "四";
-//     }else if(day =="5"){
-//         return "五";
-//     }else if(day =="6"){
-//         return "六";
-//     }else if(day =="0"){
-//         return "日";
-//     }
-// };
-// function init(){
-//     renderDay();
-//     geyData();//抓資料
-//     // renderList();
-// }
-// var data;
-// function geyData(){
-//     let xhr = new XMLHttpRequest();
-//     xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json',true);
-//     xhr.send();
-//     xhr.onload = function(){
-//         data = JSON.parse(xhr.responseText);
-//         //將JSON資料轉換為Javascript物件，讓瀏覽器操作運用
-//         renderList('臺北市');//預設顯示臺北市
-//     };
-// };
+//工具類 函式 輸入東西>輸出內容
+function judgeDayChinese(day){
+    if(day =="1"){
+        return "一";
+    }else if(day =="2"){
+        return "二";
+    }else if(day =="3"){
+        return "三";
+    }else if(day =="4"){
+        return "四";
+    }else if(day =="5"){
+        return "五";
+    }else if(day =="6"){
+        return "六";
+    }else if(day =="0"){
+        return "日";
+    }
+};
+function init(){
+    renderDay();
+    geyData();//抓資料
+    // renderList();
+}
+var data;
+function geyData(){
+    let xhr = new XMLHttpRequest();
+    xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json',true);
+    xhr.send();
+    xhr.onload = function(){
+        data = JSON.parse(xhr.responseText);
+        //將JSON資料轉換為Javascript物件，讓瀏覽器操作運用
+        renderList('臺北市');//預設顯示臺北市
+    };
+};
 
-// function renderList(city){
-//     let ary = data.features;
-//     let str = '';
-//     for(let i=0; i<ary.length; i++){
-//         if(ary[i].properties.county == city){
-//             str +=  '<li>' + ary[i].properties.name + '<br>' + '成人口罩：' + ary[i].properties.mask_adult + '<br>' + '兒童口罩' + ary[i].properties.mask_child  + '</li>';
-//         }
+function renderList(city){
+    let ary = data.features;
+    let str = '';
+    for(let i=0; i<ary.length; i++){
+        if(ary[i].properties.county == city){
+            // str +=  '<li class="pharmacy">' + ary[i].properties.name + '<br>' + '成人口罩：' + ary[i].properties.mask_adult + '<br>' + '兒童口罩' + ary[i].properties.mask_child  + '</li>';
+            str += `<li class="pharmacy">${ary[i].properties.name}</li><li class="pharmacy-address">${ary[i].properties.address}</li><li class="pharmacy-phone">${ary[i].properties.phone}</li><div class="mask-count"><p class="mask-adult">成人口罩：${ary[i].properties.mask_adult}</p><p class="mask-child">兒童口罩：${ary[i].properties.mask_child}</p></div>`
+        }
 
-//     };
-//     document.querySelector('.list').innerHTML = str;
-// }
+    };
+    document.querySelector('.list').innerHTML = str;
+}
 
-// init();//當網頁在載入預設執行哪些函式
+init();//當網頁在載入預設執行哪些函式
 
-// document.querySelector('.area').addEventListener('change',function(e){
-//     renderList(e.target.value);
-// });
+document.querySelector('.area').addEventListener('change',function(e){
+    renderList(e.target.value);
+});
 
 //leaflet
 // initialize the map on the "map" div with a given center and zoom
@@ -105,6 +106,14 @@ var greenIcon = new L.Icon({
     shadowSize: [41, 41]
   });
 
+  var redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',//改.png前面顏色 //icon背景圖片
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png', //icon陰影
+    iconSize: [25, 41], //icon size 寬高
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 // var data = [
 //     {'name':'軟體園區',lat:22.604799,lng:120.2976256},
 //     {'name':'ikea',lat:22.6066728,lng:120.3015429}
@@ -143,14 +152,28 @@ xhr.onload = function(){
     var data =JSON.parse(xhr.responseText).features;//陣列裡面的string資料
 
     //依序把marker倒進圖層裡
-    for (let i=0;i<data.length;i++){
-        // markers.addLayer(L.marker([data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]],{icon: greenIcon}.bindPopup(data[i].properties.name)));//針對這個marker，加上HTML內容進去
-        markers.addLayer(L.marker([data[i].geometry.coordinates[1],
-            data[i].geometry.coordinates[0]],
-            {icon: greenIcon})
-          );
-    }
-    map.addLayer(markers);
+    // for (let i=0;i<data.length;i++){
+    //     // markers.addLayer(L.marker([data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]],{icon: greenIcon}.bindPopup(data[i].properties.name)));//針對這個marker，加上HTML內容進去
+    //     markers.addLayer(L.marker([data[i].geometry.coordinates[1],
+    //         data[i].geometry.coordinates[0]],
+    //         {icon: greenIcon})
+    //       );
+    // }
+    // map.addLayer(markers);
+    for(let i =0;data.length>i;i++){
+        var mask;
+        if (data[i].properties.mask_adult == 0){
+            mask = redIcon;
+        }else {
+            mask = greenIcon;
+        }
+  
+        markers.addLayer(L.marker([data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]], {icon: greenIcon}).bindPopup(`<div><h1 class="map-pharmacy">${data[i].properties.name}</h1><p class="map-address">${data[i].properties.address}</p><p class="map-phone">${data[i].properties.phone}</p><div class="mask-count"><p class="map-adult">成人口罩：${data[i].properties.mask_adult}</p><p class="map-child">兒童口罩：${data[i].properties.mask_child}</p></div>`));
+      // add more markers here...
+        // L.marker().addTo(map)
+        //   )
+       }
+       map.addLayer(markers);
 };
 
 
