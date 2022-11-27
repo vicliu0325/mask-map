@@ -2,6 +2,24 @@
 // const data2 = data.features;
 // console.log(data2);
 
+// btnScrollToTop
+const btnScrollToTop = document.querySelector('#btnScrollToTop');
+
+btnScrollToTop.addEventListener('click',function(){
+    //方法一
+    // window.scrollTo(0,0);
+
+    //方法二
+    window.sidebar.scrollTo({
+        top:0,
+        left:0,
+        behavior:"smooth"
+    });
+
+    //方法三
+    // $("html, body").animate({ scrollTop:0 }, "slow");
+});
+
 const date = new Date();
 const day = date.getDay();
 // 顯示資料用
@@ -175,6 +193,7 @@ xhr.onload = function(){
        }
        map.addLayer(markers);
 };
+
 
 
 

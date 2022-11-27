@@ -68,6 +68,28 @@ html,body{
     border: 0px;
 }
 
+.list{
+    height: 100%;
+}
+
+/* ScrollToTop */
+#btnScrollToTop{
+    position: fixed;
+    left: 22%;
+    bottom: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #73C0D8;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    color: #ffffff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    z-index: 99;
+}
+
+
 .mask-count{
     display: flex;
     justify-content: space-between;
