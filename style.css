@@ -34,16 +34,38 @@ html,body{
     align-items: center;
 }
 
-.select{
-    padding: 30px;
+.input-field{
+    padding: 30px 20px;
     background: #73C0D8;
 }
 
-.area{
-    padding: 10px;
-    width: 36%;
+.input{
+    width: 85%;
     height: 40px;
     border-radius: 50px;
+    text-align: center;
+    margin-right: 20px;
+    border: 0px;
+}
+
+.fas{
+    color: #ffffff;
+}
+
+.select{
+    padding: 30px 20px;
+    background: #73C0D8;
+    display: flex;
+    justify-content: space-between;
+}
+
+.area{
+    /* padding: 10px 6px; */
+    width: 48%;
+    height: 40px;
+    border-radius: 50px;
+    text-align: center;
+    border: 0px;
 }
 
 .mask-count{
