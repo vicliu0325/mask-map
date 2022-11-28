@@ -6,11 +6,12 @@
 const btnScrollToTop = document.querySelector('#btnScrollToTop');
 
 btnScrollToTop.addEventListener('click',function(){
+    const el = document.querySelector('.sidebar');
     //方法一
     // window.scrollTo(0,0);
 
     //方法二
-    window.sidebar.scrollTo({
+    el.scrollTo({
         top:0,
         left:0,
         behavior:"smooth"
@@ -88,7 +89,20 @@ function renderList(city){
     for(let i=0; i<ary.length; i++){
         if(ary[i].properties.county == city){
             // str +=  '<li class="pharmacy">' + ary[i].properties.name + '<br>' + '成人口罩：' + ary[i].properties.mask_adult + '<br>' + '兒童口罩' + ary[i].properties.mask_child  + '</li>';
-            str += `<li class="pharmacy">${ary[i].properties.name}</li><li class="pharmacy-address">${ary[i].properties.address}</li><li class="pharmacy-phone">${ary[i].properties.phone}</li><div class="mask-count"><p class="mask-adult">成人口罩：${ary[i].properties.mask_adult}</p><p class="mask-child">兒童口罩：${ary[i].properties.mask_child}</p></div>`
+            str += `
+            <li class="pharmacy">${ary[i].properties.name}</li>
+            <li class="pharmacy-address">${ary[i].properties.address}</li>
+            <li class="pharmacy-phone">${ary[i].properties.phone}</li>
+            <div class="mask-count">
+                <p class="mask-adult">
+                    <span>成人口罩：</span>
+                    <span class="mask-number">${ary[i].properties.mask_adult}</span>
+                </p>
+                <p class="mask-child">
+                    <span>兒童口罩：</span>
+                    <span class="mask-number">${ary[i].properties.mask_child}</span>
+                </p>
+            </div>`
         }
 
     };
