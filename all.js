@@ -23,6 +23,8 @@ if ('geolocation' in navigator) {
         console.log('geolocation not available');
     }
 
+
+
 // btnScrollToTop
 const btnScrollToTop = document.querySelector('#btnScrollToTop');
 
@@ -150,10 +152,20 @@ var map = L.map('map', { //設定一個地圖，把這個地圖定位#map
     zoom: 18 //zoom縮放等級 定位在18 
 });
 
+
+
 // 載入圖資openStreetMap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
 {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);//把圖資加入到map變數上
+
+let geoBtn = document.getElementById('jsGeoBtn');
+geoBtn.addEventListener('click',function(){
+    map.setView([userLat, userLng], 13);
+    marker.setLatLng([userLat,userLng]).bindPopup(
+        `<h3>你的位置</h3>`)
+        .openPopup();
+},false);
 
 //換icon顏色
 var greenIcon = new L.Icon({
@@ -173,6 +185,8 @@ var greenIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
   });
+
+
 // var data = [
 //     {'name':'軟體園區',lat:22.604799,lng:120.2976256},
 //     {'name':'ikea',lat:22.6066728,lng:120.3015429}
