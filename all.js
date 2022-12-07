@@ -2,6 +2,27 @@
 // const data2 = data.features;
 // console.log(data2);
 
+if ('geolocation' in navigator) {
+    // 如果定位可以運行，就印出 'geolocation available'
+        console.log('geolocation available');
+        // 取得使用者位置的經緯度
+        navigator.geolocation.getCurrentPosition(position => {
+        userLat = position.coords.latitude;
+        userLng = position.coords.longitude;
+        // 印出使用者位置的經緯度
+        console.log(userLat, userLng);
+        // 以使用者的經緯度取代 [0, 0]
+        map.setView([userLat, userLng], 13);
+        // 在使用者所在位置標上 marker
+        marker.setLatLng([userLat,userLng]).bindPopup(
+            `<h3>你的位置</h3>`)
+            .openPopup();
+        });
+    } else {
+    // 如果定位無法運行，就印出 'geolocation not available'
+        console.log('geolocation not available');
+    }
+
 // btnScrollToTop
 const btnScrollToTop = document.querySelector('#btnScrollToTop');
 
@@ -86,6 +107,7 @@ function geyData(){
 function renderList(city){
     let ary = data.features;
     let str = '';
+    let town = [];
     for(let i=0; i<ary.length; i++){
         if(ary[i].properties.county == city){
             // str +=  '<li class="pharmacy">' + ary[i].properties.name + '<br>' + '成人口罩：' + ary[i].properties.mask_adult + '<br>' + '兒童口罩' + ary[i].properties.mask_child  + '</li>';
@@ -114,6 +136,11 @@ init();//當網頁在載入預設執行哪些函式
 document.querySelector('.area').addEventListener('change',function(e){
     renderList(e.target.value);
 });
+
+// renderTown
+function renderTown(){
+
+}
 
 //leaflet
 // initialize the map on the "map" div with a given center and zoom
