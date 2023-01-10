@@ -164,7 +164,7 @@ function renderTown(){
 
 var map = L.map('map', { //設定一個地圖，把這個地圖定位#map
     center: [25.052137,121.555235], //先設定map座標
-    zoom: 18 //zoom縮放等級 定位在18 
+    zoom: 19 //zoom縮放等級 定位在18 
 });
 
 
