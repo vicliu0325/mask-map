@@ -84,18 +84,19 @@ html,body{
 .select{
     padding: 30px 10px;
     background: #73C0D8;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
 }
 
-.area,.town{
+.county,.town{
     /* padding: 10px 6px; */
-    width: 48%;
+    /* width: 48%; */
     height: 40px;
     border-radius: 50px;
     text-align: center;
     border: 0px;
     color: #4e4e4e;
+    width: 98%;
 }
 
 .list{

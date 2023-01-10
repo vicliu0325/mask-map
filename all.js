@@ -23,6 +23,21 @@ if ('geolocation' in navigator) {
         console.log('geolocation not available');
     }
 
+//     // 做出縣市的 dictionary
+//     for (const feature of data.features) {
+//         const county = feature.properties.county;
+//         const town = feature.properties.town;
+//         if (typeof cityMap[county] === 'undefined') {
+//         cityMap[county] = {}; 
+//         }
+//         cityMap[county][town] = 1;
+//     }
+
+// // 整理格式
+// const keys = Object.keys(cityMap);
+// for (const i of keys) {
+//     cityMap[i] = Object.keys(cityMap[i]);
+// }
 
 
 // btnScrollToTop
@@ -135,7 +150,7 @@ function renderList(city){
 
 init();//當網頁在載入預設執行哪些函式
 
-document.querySelector('.area').addEventListener('change',function(e){
+document.querySelector('.county').addEventListener('change',function(e){
     renderList(e.target.value);
 });
 
@@ -242,7 +257,7 @@ xhr.onload = function(){
         }
   
         markers.addLayer(L.marker([data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]], {icon: greenIcon}).bindPopup(`<div><h1 class="map-pharmacy">${data[i].properties.name}</h1><p class="map-address">${data[i].properties.address}</p><p class="map-phone">${data[i].properties.phone}</p><div class="mask-count"><p class="map-adult">成人口罩：${data[i].properties.mask_adult}</p><p class="map-child">兒童口罩：${data[i].properties.mask_child}</p></div>`));
-      // add more markers here...
+        // add more markers here...
         // L.marker().addTo(map)
         //   )
        }
