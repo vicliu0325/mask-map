@@ -12,7 +12,7 @@ if ('geolocation' in navigator) {
         // 印出使用者位置的經緯度
         console.log(userLat, userLng);
         // 以使用者的經緯度取代 [0, 0]
-        map.setView([userLat, userLng], 13);
+        map.setView([userLat, userLng], 20);
         // 在使用者所在位置標上 marker
         marker.setLatLng([userLat,userLng]).bindPopup(
             `<h3>你的位置</h3>`)
