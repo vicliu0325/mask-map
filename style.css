@@ -179,9 +179,9 @@ html,body{
 
 .map-adult,.map-child{
     color: #ffffff;
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .map-adult{
