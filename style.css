@@ -18,7 +18,7 @@ html,body{
     height: 30px;
     background: #fff;
     /* border: 1px solid #1a1a1a; */
-    left: 25.3%;
+    left: 25.5%;
     border-radius: 50%;
     top: 80px;
     z-index: 999;
@@ -54,10 +54,6 @@ html,body{
     color: #ffffff;
 }
 
-.jsDate{
-    /* display: flex;
-    align-items: center; */
-}
 
 .input-field{
     padding: 30px 10px;
@@ -85,19 +81,19 @@ html,body{
 .select{
     padding: 30px 10px;
     background: #73C0D8;
-    /* display: flex;
-    justify-content: space-between; */
+    display: flex;
+    justify-content: space-between;
 }
 
 .county,.town{
     /* padding: 10px 6px; */
-    /* width: 48%; */
+    width: 48%;
     height: 40px;
     border-radius: 50px;
     text-align: center;
     border: 0px;
     color: #4e4e4e;
-    width: 98%;
+    /* width: 98%; */
 }
 
 .list{

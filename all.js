@@ -73,9 +73,9 @@ function renderDay(){
     document.querySelector('.jsDate span').textContent = chineseDay;
     document.querySelector('.today').textContent = today;
     //判斷身分證奇偶數，顯示可以購買號碼
-    if(day == 1 ||  day ==3 || day ==5){
+    if(day == 1 ||  day ==3 || day == 5){
         document.querySelector('.odd').style.display ='block';
-    }else if(day ==2 || day ==4 || day ==6){ 
+    }else if(day ==2 || day == 4 || day == 6){ 
         document.querySelector('.even').style.display ='block';
     }else{
         document.querySelector('.all').style.display ='block';
@@ -109,26 +109,92 @@ function init(){
     geyData();//抓資料
     // renderList();
 }
-var data;
+let data;
+let City = '臺中市';
+let Area = '北屯區';
 function geyData(){
     let xhr = new XMLHttpRequest();
     xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json',true);
     xhr.send();
     xhr.onload = function(){
-        data = JSON.parse(xhr.responseText);
-        //將JSON資料轉換為Javascript物件，讓瀏覽器操作運用
-        renderList('臺北市');//預設顯示臺北市
+    data = JSON.parse(xhr.responseText).features;
+    updateCity();
+    renderList('城市');
+    renderMarkers();
     };
 };
 
-function renderList(city){
-    let ary = data.features;
+// 更新選單
+let optionCity = document.querySelector('.county');
+let optionArea = document.querySelector('.town');
+optionCity.addEventListener('change',function(e){
+  City = e.target.value;
+  renderList('城市');
+})
+optionArea.addEventListener('change',function(e){
+  Area = e.target.value;
+  renderList('行政區');
+})
+
+// city select 
+function updateCity(){
+  let dataAllCity = [];
+  for(let i=0;i<data.length;i++){
+    dataAllCity.push(data[i].properties.county);
+  }
+  // 篩選出重複的城市
+  let noRepeatCity = Array.from(new Set(dataAllCity));
+  let noRepeatCity2 = noRepeatCity.filter(el => el);
+  
+  // 將城市帶入選單
+  let len = noRepeatCity2.length;
+  let str = '';
+  for(let i=0;i<len;i++){
+    if(noRepeatCity2[i] == City){
+      str += `<option value="${noRepeatCity2[i]}" selected>${noRepeatCity2[i]}</option>`
+    }else{
+      str += `<option value="${noRepeatCity2[i]}">${noRepeatCity2[i]}</option>`
+    }
+  }
+  optionCity.innerHTML = str;
+}
+
+// 側邊資訊
+let list = document.querySelector('.list');
+function renderList(str){
+  //如果是選擇城鎮會更新行政區資料
+  if(str == '城市'){
+    //處理行政區
+    let dataAllArea = [];
+    for(let i=0;i<data.length; i++){
+      if(data[i].properties.county == City){
+        dataAllArea.push(data[i].properties.town);
+      }
+    }
+    let noRepeatArea = Array.from(new Set(dataAllArea));
+    let noRepeatArea2 = noRepeatArea.filter((el) => el);
+    
+    Area = noRepeatArea2[0]; //因為切換了城市，所以丟第一筆行政區給預設
+    let len = noRepeatArea2.length;
     let str = '';
-    let town = [];
-    for(let i=0; i<ary.length; i++){
-        if(ary[i].properties.county == city){
-            // str +=  '<li class="pharmacy">' + ary[i].properties.name + '<br>' + '成人口罩：' + ary[i].properties.mask_adult + '<br>' + '兒童口罩' + ary[i].properties.mask_child  + '</li>';
-            str += `
+    for(let i=0;i<len;i++){
+      if(noRepeatArea2[i] == Area){
+        str += `<option value="${noRepeatArea2[i]}" selected>${noRepeatArea2[i]}</option>`;
+      }else{
+        str += `<option value="${noRepeatArea2[i]}">${noRepeatArea2[i]}</option>`;
+      }
+    }
+    optionArea.innerHTML = str;
+  }
+
+  let ary = data;
+  let listStr= '';
+  for (let i=0;i<ary.length;i++){
+    //屬於那個城鎮也屬於那個行鎮區
+    if(ary[i].properties.county == City && ary[i].properties.town == Area){
+      let latitude = ary[i].geometry.coordinates[1];
+      let longitude = ary[i].geometry.coordinates[0];
+      listStr += `
             <li class="pharmacy">${ary[i].properties.name}</li>
             <li class="pharmacy-address">${ary[i].properties.address}</li>
             <li class="pharmacy-phone">${ary[i].properties.phone}</li>
@@ -141,23 +207,23 @@ function renderList(city){
                     <span>兒童口罩：</span>
                     <span class="mask-number">${ary[i].properties.mask_child}</span>
                 </p>
-            </div>`
-        }
-
-    };
-    document.querySelector('.list').innerHTML = str;
+            </div>`;
+    }
+  }
+  list.innerHTML = listStr == ""?"<li><span>找不到此行政區資料</span></li>" : listStr;
+  
 }
 
 init();//當網頁在載入預設執行哪些函式
 
-document.querySelector('.county').addEventListener('change',function(e){
-    renderList(e.target.value);
-});
+// document.querySelector('.county').addEventListener('change',function(e){
+//     renderList(e.target.value);
+// });
 
-// renderTown
-function renderTown(){
+// // renderTown
+// function renderTown(){
 
-}
+// }
 
 //leaflet
 // initialize the map on the "map" div with a given center and zoom
